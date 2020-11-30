@@ -3,19 +3,24 @@ package main
 import "testing"
 
 func TestHelloWorld(t *testing.T) {
-	request := SayHello("")
-	response := "Hello, World"
 
-	if request != response {
-		t.Errorf("There was an error.  Expected to get %q but received %q\n", response, request)
+	validateMessage := func(t *testing.T, request, response string) {
+		if request != response {
+			t.Errorf("There was an error.  Expected to get %q but received %q\n", response, request)
+		}
 	}
-}
 
-func TestHelloWithArgument(t *testing.T) {
-	request := SayHello("George")
-	response := "Hello, George"
+	t.Run("Check for Hello, World", func(t *testing.T) {
+		request := SayHello("")
+		response := "Hello, World"
 
-	if request != response {
-		t.Errorf("There was an error.  Expected to get %q but received %q\n", response, request)
-	}
+		validateMessage(t, request, response)
+	})
+
+	t.Run("Check for Hello, [Name]", func(t *testing.T) {
+		request := SayHello("George")
+		response := "Hello, George"
+
+		validateMessage(t, request, response)
+	})
 }

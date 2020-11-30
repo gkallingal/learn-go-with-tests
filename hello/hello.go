@@ -5,7 +5,9 @@ import "fmt"
 const (
 	englishPrefix = "Hello, "
 	spanish       = "Spanish"
+	french        = "French"
 	spanishPrefix = "Hola, "
+	frenchPrefix  = "Bonjour, "
 )
 
 func main() {
@@ -21,6 +23,8 @@ func SayHello(name, language string) string {
 	switch language {
 	case spanish:
 		return spanishPrefix + name
+	case french:
+		return frenchPrefix + name
 	default:
 		return englishPrefix + name
 	}

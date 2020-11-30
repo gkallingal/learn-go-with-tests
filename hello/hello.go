@@ -1,15 +1,17 @@
 package main
 
+import "fmt"
+
 const (
 	englishPrefix = "Hello, "
 )
 
 func main() {
 	//	fmt.Println("Hello, World")
-	SayHello("Pippy")
+	fmt.Println(SayHello("Pippy", ""))
 }
 
-func SayHello(name string) string {
+func SayHello(name, language string) string {
 	if name == "" {
 		name = "World"
 	}

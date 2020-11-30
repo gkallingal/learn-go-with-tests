@@ -12,15 +12,22 @@ func TestHelloWorld(t *testing.T) {
 	}
 
 	t.Run("Check for Hello, World", func(t *testing.T) {
-		request := SayHello("")
+		request := SayHello("", "")
 		response := "Hello, World"
 
 		validateMessage(t, request, response)
 	})
 
 	t.Run("Check for Hello, [Name]", func(t *testing.T) {
-		request := SayHello("George")
+		request := SayHello("George", "")
 		response := "Hello, George"
+
+		validateMessage(t, request, response)
+	})
+
+	t.Run("Check for Spanish", func(t *testing.T) {
+		request := SayHello("Javier", "Spanish")
+		response := "Hola, Javier"
 
 		validateMessage(t, request, response)
 	})

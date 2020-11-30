@@ -31,4 +31,11 @@ func TestHelloWorld(t *testing.T) {
 
 		validateMessage(t, request, response)
 	})
+
+	t.Run("Check for French", func(t *testing.T) {
+		request := SayHello("Serge", "French")
+		response := "Bonjour, Serge"
+
+		validateMessage(t, request, response)
+	})
 }

@@ -10,5 +10,8 @@ func main() {
 }
 
 func SayHello(name string) string {
+	if name == "" {
+		name = "World"
+	}
 	return englishPrefix + name
 }

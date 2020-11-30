@@ -5,6 +5,7 @@ import "testing"
 func TestHelloWorld(t *testing.T) {
 
 	validateMessage := func(t *testing.T, request, response string) {
+		t.Helper()
 		if request != response {
 			t.Errorf("There was an error.  Expected to get %q but received %q\n", response, request)
 		}

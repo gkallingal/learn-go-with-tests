@@ -5,10 +5,10 @@ const (
 )
 
 //Repeat function will take any character and repeat it 5 times
-func Repeat(letter string) string {
+func Repeat(letter string, count int) string {
 	var repeat string
 
-	for i := 0; i < repeatCount; i++ {
+	for i := 0; i < count; i++ {
 		repeat += letter
 	}
 	return repeat

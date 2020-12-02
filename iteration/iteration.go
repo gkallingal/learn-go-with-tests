@@ -4,7 +4,7 @@ const (
 	repeatCount = 5
 )
 
-//Repeat function will take any character and repeat it 5 times
+//Repeat function will take any character and repeat it N number of times based on count parameter
 func Repeat(letter string, count int) string {
 	var repeat string
 

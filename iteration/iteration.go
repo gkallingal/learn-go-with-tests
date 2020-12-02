@@ -1,5 +1,10 @@
 package iteration
 
 func Repeat(letter string) string {
-	return ""
+	var repeat string
+
+	for i := 0; i < 5; i++ {
+		repeat = repeat + letter
+	}
+	return repeat
 }

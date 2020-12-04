@@ -6,7 +6,7 @@ func TestSum(t *testing.T) {
 
 	t.Run("calculate sum of an array", func(t *testing.T) {
 		//declare array
-		numbers := [5]int{1, 1, 1, 1, 2}
+		numbers := []int{1, 1, 1, 1, 2}
 
 		got := Sum(numbers)
 

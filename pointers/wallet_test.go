@@ -1,7 +1,6 @@
 package pointers
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -13,15 +12,7 @@ func TestWallet(t *testing.T) {
 		//call wallet.Deposit method
 		wallet.Deposit(10)
 
-		//declare got variable and apply value from wallet.Balance() method
-		got := wallet.Balance()
-		fmt.Printf("memory address of test balance: %p\n", &wallet.balance)
-
-		want := Bitcoin(10)
-
-		if got != want {
-			t.Errorf("Got %s, Want %s", got, want)
-		}
+		validateBalance(t, wallet, 10)
 	})
 	t.Run("Withdraw and check balance", func(t *testing.T) {
 		//declare Wallet struct with an initial balance
@@ -29,12 +20,14 @@ func TestWallet(t *testing.T) {
 
 		wallet.Withdraw(10)
 
-		got := wallet.Balance()
-
-		want := Bitcoin(90)
-
-		if got != want {
-			t.Errorf("Got %d, Want %d", got, want)
-		}
+		validateBalance(t, wallet, 90)
 	})
+}
+
+func validateBalance(t *testing.T, wallet Wallet, want Bitcoin) {
+	t.Helper()
+	got := wallet.Balance()
+	if got != want {
+		t.Errorf("Got %d, Want %d", got, want)
+	}
 }

@@ -6,19 +6,21 @@ import (
 )
 
 func TestWallet(t *testing.T) {
-	//declare wallet of type Wallet struct
-	wallet := Wallet{}
+	t.Run("Deposit and check balance", func(t *testing.T) {
+		//declare wallet of type Wallet struct
+		wallet := Wallet{}
 
-	//call wallet.Deposit method
-	wallet.Deposit(10)
+		//call wallet.Deposit method
+		wallet.Deposit(10)
 
-	//declare got variable and apply value from wallet.Balance() method
-	got := wallet.Balance()
-	fmt.Printf("memory address of test balance: %p\n", &wallet.balance)
+		//declare got variable and apply value from wallet.Balance() method
+		got := wallet.Balance()
+		fmt.Printf("memory address of test balance: %p\n", &wallet.balance)
 
-	want := Bitcoin(10)
+		want := Bitcoin(10)
 
-	if got != want {
-		t.Errorf("Got %s, Want %s", got, want)
-	}
+		if got != want {
+			t.Errorf("Got %s, Want %s", got, want)
+		}
+	})
 }

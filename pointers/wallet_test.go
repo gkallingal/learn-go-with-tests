@@ -23,4 +23,18 @@ func TestWallet(t *testing.T) {
 			t.Errorf("Got %s, Want %s", got, want)
 		}
 	})
+	t.Run("Withdraw and check balance", func(t *testing.T) {
+		//declare Wallet struct with an initial balance
+		wallet := Wallet{balance: 100}
+
+		wallet.Withdraw(10)
+
+		got := wallet.Balance()
+
+		want := Bitcoin(90)
+
+		if got != want {
+			t.Errorf("Got %d, Want %d", got, want)
+		}
+	})
 }

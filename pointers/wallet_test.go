@@ -1,6 +1,9 @@
 package pointers
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestWallet(t *testing.T) {
 	//declare wallet of type Wallet struct
@@ -11,6 +14,7 @@ func TestWallet(t *testing.T) {
 
 	//declare got variable and apply value from wallet.Balance() method
 	got := wallet.Balance()
+	fmt.Printf("memory address of test balance: %p\n", &wallet.balance)
 
 	want := 10
 

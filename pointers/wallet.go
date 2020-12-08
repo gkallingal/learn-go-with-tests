@@ -1,10 +1,13 @@
 package pointers
 
+import "fmt"
+
 type Wallet struct {
 	balance int
 }
 
 func (w *Wallet) Deposit(amount int) {
+	fmt.Printf("memory address of deposit balance: %p\n", &w.balance)
 	w.balance += amount
 
 }

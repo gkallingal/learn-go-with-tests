@@ -22,6 +22,13 @@ func TestWallet(t *testing.T) {
 
 		validateBalance(t, wallet, 90)
 	})
+	t.Run("Withdraw with insufficient funds", func(t *testing.T) {
+		startBalance := Bitcoin(10)
+		wallet := Wallet{balance: startBalance}
+		err := wallet.Withdraw(50)
+		validateBalance(t, wallet, startBalance)
+		validateError(t, err, ErrInsufficientFunds)
+	})
 }
 
 func validateBalance(t *testing.T, wallet Wallet, want Bitcoin) {
@@ -29,5 +36,15 @@ func validateBalance(t *testing.T, wallet Wallet, want Bitcoin) {
 	got := wallet.Balance()
 	if got != want {
 		t.Errorf("Got %d, Want %d", got, want)
+	}
+}
+
+func validateError(t *testing.T, got error, want error) {
+	t.Helper()
+	if got == nil {
+		t.Fatal("Expected error but got none")
+	}
+	if got != want {
+		t.Errorf("Got %s, Want %s", got, want)
 	}
 }

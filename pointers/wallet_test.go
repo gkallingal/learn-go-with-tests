@@ -1,50 +1,57 @@
 package pointers
 
 import (
+	"fmt"
 	"testing"
 )
 
 func TestWallet(t *testing.T) {
-	t.Run("Deposit and check balance", func(t *testing.T) {
-		//declare wallet of type Wallet struct
+	t.Run("Deposit and Check Balance", func(t *testing.T) {
 		wallet := Wallet{}
-
-		//call wallet.Deposit method
 		wallet.Deposit(10)
+		fmt.Printf("memory address of balance from Test: %p\n", &wallet.balance)
+		assertBalance(t, wallet, 10)
 
-		validateBalance(t, wallet, 10)
 	})
-	t.Run("Withdraw and check balance", func(t *testing.T) {
-		//declare Wallet struct with an initial balance
-		wallet := Wallet{balance: 100}
 
-		wallet.Withdraw(10)
+	t.Run("Withdraw and Check Balance", func(t *testing.T) {
+		wallet := Wallet{balance: 90}
 
-		validateBalance(t, wallet, 90)
+		err := wallet.Withdraw(10)
+		assertBalance(t, wallet, 80)
+		assertNoError(t, err)
 	})
+
 	t.Run("Withdraw with insufficient funds", func(t *testing.T) {
-		startBalance := Bitcoin(10)
-		wallet := Wallet{balance: startBalance}
-		err := wallet.Withdraw(50)
-		validateBalance(t, wallet, startBalance)
-		validateError(t, err, ErrInsufficientFunds)
+		startingBalance := Bitcoin(10)
+		wallet := Wallet{balance: startingBalance}
+		err := wallet.Withdraw(20)
+		assertBalance(t, wallet, startingBalance)
+		assertError(t, err, ErrInsufficientFunds)
 	})
 }
 
-func validateBalance(t *testing.T, wallet Wallet, want Bitcoin) {
+func assertBalance(t *testing.T, wallet Wallet, want Bitcoin) {
 	t.Helper()
 	got := wallet.Balance()
+
 	if got != want {
-		t.Errorf("Got %d, Want %d", got, want)
+		t.Errorf("Got %s, Want %s", got, want)
 	}
 }
 
-func validateError(t *testing.T, got error, want error) {
+func assertError(t *testing.T, err error, want error) {
 	t.Helper()
-	if got == nil {
-		t.Fatal("Expected error but got none")
+	if err == nil {
+		t.Fatal("Wanted error but got none")
 	}
-	if got != want {
-		t.Errorf("Got %s, Want %s", got, want)
+	if err.Error() != want.Error() {
+		t.Errorf("Got %s, Want %s", err.Error(), want)
+	}
+}
+
+func assertNoError(t *testing.T, err error) {
+	if err != nil {
+		t.Error("Got error expected none")
 	}
 }

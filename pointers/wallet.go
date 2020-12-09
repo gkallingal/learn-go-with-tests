@@ -18,12 +18,12 @@ type Wallet struct {
 }
 
 func (w *Wallet) Deposit(amount Bitcoin) {
-	fmt.Printf("memory address of deposit balance: %p\n", &w.balance)
+	fmt.Printf("memory address of balance from Deposit: %p\n", &w.balance)
 	w.balance += amount
-
 }
 
 func (w *Wallet) Balance() Bitcoin {
+	fmt.Printf("memory address of balance from Balance: %p\n", &w.balance)
 	return w.balance
 }
 

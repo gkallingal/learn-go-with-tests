@@ -29,12 +29,15 @@ func TestDictionary(t *testing.T) {
 		definition := "definition of delta"
 		dictionary.Add(word, definition)
 
-		got, err := dictionary.Search(word)
-		if err != nil {
-			t.Fatalf("%q should have been added", word)
-		}
-		assertStrings(t, got, definition)
+		assertDefinition(t, dictionary, word, definition)
 
+	})
+	t.Run("Add existing word", func(t *testing.T) {
+		word := "test"
+		definition := "definition of test"
+		err := dictionary.Add(word, definition)
+		assertError(t, err, ErrWordExists)
+		assertDefinition(t, dictionary, word, definition)
 	})
 }
 
@@ -50,4 +53,19 @@ func assertError(t *testing.T, err, want error) {
 	if err != want {
 		t.Errorf("Got %q, want %q", err, want)
 	}
+	if err == nil {
+		if want == nil {
+			return
+		}
+		t.Fatalf("expected error, got none")
+	}
+}
+
+func assertDefinition(t *testing.T, dictionary Dictionary, word, definition string) {
+	t.Helper()
+	got, err := dictionary.Search(word)
+	if err != nil {
+		t.Fatalf("%q should have been added: %q", word, err)
+	}
+	assertStrings(t, got, definition)
 }

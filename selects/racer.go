@@ -1,15 +1,26 @@
 package selects
 
 import (
+	"fmt"
 	"net/http"
+	"time"
 )
 
-func WebsiteRacer(x, y string) string {
+var tenSecondTimeout = 10 * time.Second
+
+func WebsiteRacer(x, y string) (string, error) {
+	return ConfigurableRacer(x, y, tenSecondTimeout)
+
+}
+
+func ConfigurableRacer(x, y string, timeout time.Duration) (string, error) {
 	select {
 	case <-ping(x):
-		return x
+		return x, nil
 	case <-ping(y):
-		return y
+		return y, nil
+	case <-time.After(timeout):
+		return "", fmt.Errorf("Timeout waiting for %s and %s to respond", x, y)
 	}
 }
 
